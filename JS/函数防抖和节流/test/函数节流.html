@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>函数节流</title>
+</head>
+<body>
+    <script>
+        // // 实现一个具有函数节流功能的throttle函数，执行下列代码只输出两次zhangsan。
+        // const demo = throttle((a) => {
+        //     console.log("a", a);
+        // }, 1000)
+        // demo("zhangsan");
+        // demo("zhangsan");
+        // setTimeout(() => {
+        //     demo("zhangsan");
+        // }, 500);
+        // setTimeout(() => {
+        //     demo("zhangsan");
+        // }, 1500);
+        
+        // function throttle (fn, wait) {
+        //     let last = 0;
+        //     return function () {
+        //         const args = [...arguments];
+        //         const now = new Date().getTime();
+        //         if (now - last >= wait) {
+        //             fn.apply(this, args);
+        //             last = now;
+        //         }
+        //     }
+        // }
+
+        // function throttle (fn, wait) {
+        //     let timer;
+        //     return function () {
+        //         const args = [...arguments];
+        //         if (!timer) {
+        //             timer = setTimeout(() => {
+        //                 fn.apply(this, args);
+        //                 timer = null;
+        //             }, wait);
+        //         }
+        //     }
+        // }
+
+        // 实现一个具有函数节流功能的throttle函数，执行下列代码只输出两次zhangsan，要求实现立即执行和延迟执行两种方式
+        const demo = throttle((a) => {
+            console.log("a", a);
+        }, 1000, true)
+        demo("zhangsan");
+        demo("zhangsan");
+        setTimeout(() => {
+            demo("zhangsan");
+        }, 500);
+        setTimeout(() => {
+            demo("zhangsan");
+        }, 1500);
+        function throttle (fn, wait, immediate = false) {
+            if (immediate) {
+                let last = 0;
+                return function () {
+                    const args = [...arguments];
+                    const now = new Date().getTime();
+                    if (now - last >= wait) {
+                        fn.apply(this, args);
+                        last = now;
+                    }
+                }
+            } else {
+                let timer;
+                return function () {
+                    const args = [...arguments];
+                    if (!timer) {
+                        timer = setTimeout(() => {
+                            fn.apply(this, args);
+                            timer = null;
+                        }, wait);
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>

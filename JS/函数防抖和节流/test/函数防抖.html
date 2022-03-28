@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>函数防抖</title>
+</head>
+<body>
+    <script>
+        // // 实现一个具有函数防抖功能的debounce函数，执行下列代码只输出一次zhangsan。
+        // const demo = debounce((a) => {
+        //     console.log("a", a);
+        // }, 1000)
+        // demo("zhangsan");
+        // demo("zhangsan");
+        // demo("zhangsan");
+
+        // function debounce (fn, wait) {
+        //     let timer;
+        //     return function () {
+        //         let args = [...arguments];
+        //         if (timer) {
+        //             clearTimeout(timer)
+        //         }
+        //         timer = setTimeout(() => {
+        //             fn.apply(this, args);
+        //         }, wait);
+        //     }
+        // }
+
+        // function debounce (fn, wait) {
+        //     let timer;
+        //     return function () {
+        //         let args = [...arguments];
+        //         if (!timer) {
+        //             fn.apply(this, args);
+        //         }
+        //         timer = setTimeout(() => {
+        //             timer = null;
+        //         }, wait);
+        //     }
+        // }
+        // 实现一个具有函数防抖功能的debounce函数，执行下列代码只输出一次zhangsan，要求实现立即执行和延迟执行两种方式。
+        const demo = debounce((a) => {
+            console.log("a", a);
+        }, 1000, true)
+        demo("zhangsan");
+        demo("zhangsan");
+        demo("zhangsan");
+        // setTimeout(() => {
+        //     demo("zhangsan");
+        // }, 1500)
+        function debounce (fn, wait = 0, immediate = false) {
+            let timer;
+            return function () {
+                const args = [...arguments];
+                if (immediate) {
+                    if (!timer) {
+                        fn.apply(this, args);
+                    }
+                    timer = setTimeout(() => {
+                        timer = null;
+                    }, wait);
+                } else {
+                    if (timer) {
+                        clearTimeout(timer);
+                    }
+                    timer = setTimeout(() => {
+                        fn.apply(this, args);
+                    }, wait);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
